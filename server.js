@@ -9,16 +9,23 @@ const DATABASE_PORT = process.env.PORT || 3000;
 const DB_NAME = process.env.DB_NAME;
 const displayRoutes = require("express-routemap");
 const userRoute = require("./routes/user");
+// const otpRoute = require("./routes/otp");
+const transactionRoute = require("./routes/transaction");
+const bankRoute = require("./routes/bank");
+
 const db = require("./config/database");
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/api/v1/user", userRoute);
+// app.use("/api/v1/otp", otpRoute);
+app.use("/api/v1/transaction", transactionRoute);
+app.use("/api/v1/bank", bankRoute);
 
 mongoose
   .connect(`${DB_URI}`)
   .then(() => {
-    console.log("Connection has been established successfully.");
+    console.log("Connection has been established successfully🙌.");
     app.listen(PORT, async () => {
       console.log(`... listening on ${PORT}`);
       await db.connect().then((res) => console.log("res"));
